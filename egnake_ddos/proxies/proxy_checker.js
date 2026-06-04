@@ -2,11 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 
-// Çalıştırılan terminal dizinine göre esnek dosya yolu çözümü
 let filePath = path.resolve(__dirname, 'proxies', 'proxies.json');
 
 if (!fs.existsSync(filePath)) {
-    // Eğer terminal zaten proxies klasörünün içindeyse bir kademe geriye kontrol ekle
     filePath = path.resolve(__dirname, 'proxies.json');
 }
 
@@ -16,7 +14,6 @@ if (!fs.existsSync(filePath)) {
     process.exit(1);
 }
 
-// Dosyayı oku ve ayrıştır
 const fileContent = fs.readFileSync(filePath, 'utf8');
 let rawProxies = [];
 
@@ -40,10 +37,9 @@ async function checkProxy(proxyObj) {
 
     try {
         const startTime = Date.now();
-        // Güvenilir bir genel uç noktaya bağlantı doğrulaması gönderilir
         await axios.get('http://www.google.com', {
             proxy: { host, port },
-            timeout: 3000 // 3 saniyede yanıt vermeyen elenir
+            timeout: 3000 
         });
 
         return {
@@ -59,7 +55,7 @@ async function checkProxy(proxyObj) {
 
 async function startVerification() {
     const workingProxies = [];
-    const concurrencyLimit = 50; // Ağ kartını kilitlememek için eşzamanlı istek sınırı
+    const concurrencyLimit = 50;
 
     for (let i = 0; i < rawProxies.length; i += concurrencyLimit) {
         const chunk = rawProxies.slice(i, i + concurrencyLimit);
