@@ -28,8 +28,11 @@ Advanced HTTP/2 DDoS Attack Platform with Proxy Support
 
 ```bash
 # Clone the repository (if applicable)
+git clone https://github.com/egnake/Egnake_Ddos
 # cd into the directory
-
+cd egnake_ddos
+#and again
+cd egnake_ddos
 # Install dependencies
 npm install
 
