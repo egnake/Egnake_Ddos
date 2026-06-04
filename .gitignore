@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+egnake_ddos/node_modules/
+
+# VS Code settings
+.vscode/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+egnake_ddos/.env
+egnake_ddos/.env.local
+egnake_ddos/.env.development.local
+egnake_ddos/.env.test.local
+egnake_ddos/.env.production.local
+
+# Proxies (Keep checker scripts, ignore data files)
+egnake_ddos/proxies/*
+!egnake_ddos/proxies/proxy_checker.js
+
+# Logs
+*.log
+logs/
+egnake_ddos/logs/
+
+# OS Files
+.DS_Store
+Thumbs.db

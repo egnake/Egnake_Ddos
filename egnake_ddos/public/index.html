@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egnake DDoS Platform</title>
+    <style>
+        /* Küresel Sıfırlama ve Premium Koyu Tema */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at 50% 0%, #111726 0%, #07090e 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 50px 24px;
+        }
+
+        .header {
+            padding-bottom: 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ffffff 30%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1rem;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* İstatistik Paneli Grid Yapısı */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.1);
+        }
+
+        .stat-card p {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-card h3 {
+            font-size: 1.85rem;
+            color: #ffffff;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Paneller */
+        .attack-panel,
+        .attacks-list {
+            background: rgba(17, 24, 39, 0.4);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 36px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .attack-panel h2,
+        .attacks-list h2 {
+            color: #ffffff;
+            margin-bottom: 28px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Modern Input Grupları */
+        .attack-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(11, 15, 25, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: #0b0f19;
+        }
+
+        /* Premium Buton Tasarımları */
+        .btn-group {
+            display: flex;
+            justify-content: flex-start;
+            gap: 16px;
+            margin-top: 36px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 13px 28px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            border-color: #dc2626;
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.2);
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+            border-color: #b91c1c;
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        /* Canlı Akış Kart Tasarımları */
+        .attack-card {
+            background: rgba(7, 9, 14, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3b82f6;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .attack-card:hover {
+            border-color: #2563eb;
+            background: rgba(7, 9, 14, 0.9);
+        }
+
+        .attack-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .attack-title h4 {
+            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .attack-type {
+            background: rgba(59, 130, 246, 0.12);
+            color: #60a5fa;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .attack-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .attack-details p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .attack-details strong {
+            color: #ffffff;
+            display: block;
+            font-size: 1rem;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .attack-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 16px;
+        }
+
+        .stat-badge {
+            background: rgba(17, 24, 39, 0.8);
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            text-align: center;
+        }
+
+        .stat-badge h5 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-badge span {
+            color: #64748b;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.05);
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 16px;
+            }
+
+            .attack-panel,
+            .attacks-list {
+                padding: 24px;
+            }
+
+            .attack-form {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>Egnake DDoS Platform</h1>
+                <p>Advanced HTTP/2 DDoS Attack Platform with Proxy Support</p>
+            </div>
+        </div>
+
+        <div class="stats-panel">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <p>Total Requests</p>
+                    <h3 id="totalRequests">0</h3>
+                </div>
+                <div class="stat-card">
+                    <p>Total Bytes</p>
+                    <h3 id="totalBytes">0</h3>
+                </div>
+                <div class="stat-card">
+                    <p>Active Attacks</p>
+                    <h3 id="activeAttacks">0</h3>
+                </div>
+                <div class="stat-card">
+                    <p>Active Proxies</p>
+                    <h3 id="proxyCount">0</h3>
+                </div>
+                <div class="stat-card">
+                    <p>Uptime</p>
+                    <h3 id="uptime">0s</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="attack-panel">
+            <h2>Launch Attack</h2>
+            <form id="attackForm">
+                <div class="attack-form">
+                    <div class="form-group">
+                        <label for="type">Attack Type</label>
+                        <select id="type" required>
+                            <option value="http_flood">HTTP Flood (Basic)</option>
+                            <option value="egnake_http2" selected>HTTP/2 Advanced</option>
+                            <option value="tcp_flood">TCP Flood</option>
+                            <option value="udp_flood">UDP Flood</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="target">Target URL / Host</label>
+                        <input type="text" id="target" placeholder="https://example.com or ip:port" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration">Duration (seconds)</label>
+                        <input type="number" id="duration" value="60" min="10" max="3600" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="threads">Threads</label>
+                        <input type="number" id="threads" value="10" min="1" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rate">Rate (requests/sec)</label>
+                        <input type="number" id="rate" value="500" min="10" max="5000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="port">Port</label>
+                        <input type="number" id="port" value="80" min="1" max="65535">
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">Start Attack</button>
+                    <button type="button" id="stopAllBtn" class="btn btn-danger">Stop All Attacks</button>
+                    <button type="button" id="reloadProxiesBtn" class="btn">Reload Proxies</button>
+                </div>
+            </form>
+            <div class="loader" id="loader">
+                <div class="spinner"></div>
+                <p>Starting operation...</p>
+            </div>
+        </div>
+
+        <div class="attacks-list">
+            <h2>Active Attacks</h2>
+            <div id="attacksContainer"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+        const attacksContainer = document.getElementById('attacksContainer');
+        const loader = document.getElementById('loader');
+
+        // Update stats
+        socket.on('stats', (data) => {
+            document.getElementById('totalRequests').textContent = data.totalRequests.toLocaleString();
+            document.getElementById('totalBytes').textContent = formatBytes(data.totalBytes);
+            document.getElementById('activeAttacks').textContent = data.activeAttacks;
+            document.getElementById('proxyCount').textContent = data.proxyCount;
+            document.getElementById('uptime').textContent = data.uptime + 's';
+        });
+
+        // Update attacks list
+        socket.on('attacks', (data) => {
+            attacksContainer.innerHTML = '';
+
+            if (data.length === 0) {
+                attacksContainer.innerHTML = '<div class="attack-card" style="text-align: center; border-left-color: #374151;"><p style="color: #94a3b8;">No active operations running</p></div>';
+                return;
+            }
+
+            data.forEach(attack => {
+                const card = document.createElement('div');
+                card.className = 'attack-card';
+                card.innerHTML = `
+                    <div class="attack-header">
+                        <div class="attack-title">
+                            <h4>${attack.target}</h4>
+                            <p style="color: #64748b; font-size: 0.85rem; margin-top: 2px;">ID: ${attack.id}</p>
+                        </div>
+                        <span class="attack-type">${attack.type.toUpperCase()}</span>
+                    </div>
+                    <div class="attack-details">
+                        <p>Elapsed <strong>${attack.elapsed}s</strong></p>
+                        <p>Remaining <strong>${attack.remaining}s</strong></p>
+                        <p>Rate <strong>${attack.rate} req/s</strong></p>
+                        <p>Threads <strong>${attack.stats?.threads || 'N/A'}</strong></p>
+                    </div>
+                    <div class="attack-stats">
+                        <div class="stat-badge">
+                            <h5>${attack.stats?.sent?.toLocaleString() || 0}</h5>
+                            <span>Sent</span>
+                        </div>
+                        <div class="stat-badge">
+                            <h5>${attack.stats?.success?.toLocaleString() || 0}</h5>
+                            <span>Success</span>
+                        </div>
+                        <div class="stat-badge">
+                            <h5>${attack.stats?.failed?.toLocaleString() || 0}</h5>
+                            <span>Failed</span>
+                        </div>
+                        <div class="stat-badge">
+                            <h5>${formatBytes(attack.stats?.bytes || 0)}</h5>
+                            <span>Bytes</span>
+                        </div>
+                    </div>
+                    <button onclick="stopAttack('${attack.id}')" class="btn btn-danger" style="margin-top: 20px; width: 100%;">Stop Target Attack</button>
+                `;
+                attacksContainer.appendChild(card);
+            });
+        });
+
+        // Attack form
+        document.getElementById('attackForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loader.style.display = 'block';
+
+            const type = document.getElementById('type').value;
+            const target = document.getElementById('target').value;
+            const duration = parseInt(document.getElementById('duration').value);
+            const threads = parseInt(document.getElementById('threads').value);
+            const rate = parseInt(document.getElementById('rate').value);
+            const port = parseInt(document.getElementById('port').value) || 80;
+
+            try {
+                const response = await fetch('/api/attack/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type, target, duration, threads, rate, port })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    alert(`✅ Attack started with ID: ${data.attackId}`);
+                } else {
+                    alert(`❌ Error: ${data.error}`);
+                }
+            } catch (error) {
+                alert(`❌ Network error: ${error.message}`);
+            } finally {
+                loader.style.display = 'none';
+            }
+        });
+
+        // Stop all attacks
+        document.getElementById('stopAllBtn').addEventListener('click', async () => {
+            if (confirm('Are you sure you want to stop all attacks?')) {
+                await fetch('/api/attack/stop-all', { method: 'POST' });
+            }
+        });
+
+        // Reload proxies
+        document.getElementById('reloadProxiesBtn').addEventListener('click', async () => {
+            const response = await fetch('/api/proxies/reload', { method: 'POST' });
+            const data = await response.json();
+            alert(`✅ Proxies reloaded: ${data.count} active proxies`);
+        });
+
+        // Global stop function
+        window.stopAttack = async (attackId) => {
+            if (confirm(`Stop attack ${attackId}?`)) {
+                await fetch(`/api/attack/stop/${attackId}`, { method: 'POST' });
+            }
+        };
+
+        // Helper functions
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Initialize
+        socket.emit('attacks');
+    </script>
+</body>
+
+</html>
