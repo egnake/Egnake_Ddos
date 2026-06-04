@@ -1,8 +1,7 @@
-# ⚡ Egnake DDoS Platform v2.0
-
+#  Egnake DDoS Platform
 Advanced HTTP/2 DDoS Attack Platform with Proxy Support
 
-## 🚀 Features
+##  Features
 
 ### 🆕 Advanced HTTP/2 Attack (Egnake Style)
 - **HTTP/2 Multiplexing**: Single TCP connection, multiple streams
@@ -12,7 +11,7 @@ Advanced HTTP/2 DDoS Attack Platform with Proxy Support
 - **IP Spoofing**: Random X-Forwarded-For, Client-IP, Real-IP headers
 - **Referer Randomization**: Random search engine referers
 
-### 🎯 Attack Types
+###  Attack Types
 1. **HTTP/2 Advanced (Egnake)**: Modern HTTP/2 attack with proxy support
 2. **HTTP Flood**: Traditional HTTP/1.1 flood
 3. **TCP Flood**: Connection exhaustion attack
@@ -25,7 +24,7 @@ Advanced HTTP/2 DDoS Attack Platform with Proxy Support
 - **Proxy Management**: JSON-based proxy database
 - **Resource Management**: Configurable threads and rates
 
-## 📦 Installation
+##  Installation
 
 ```bash
 # Clone the repository (if applicable)
@@ -38,7 +37,7 @@ npm install
 npm start
 ```
 
-## 🏗️ Project Structure
+##  Project Structure
 
 ```
 egnake_ddos/
@@ -105,7 +104,7 @@ Proxies are stored in `proxies/proxies.json`:
 - `npm start`: Start the platform
 - Customize memory: `node --max-old-space-size=16384 src/app.js`
 
-## ⚠️ Legal Disclaimer
+## !!!! Legal Disclaimer !!!!!!
 
 **This tool is for educational and authorized testing purposes only.**
 
@@ -114,7 +113,7 @@ Proxies are stored in `proxies/proxies.json`:
 - The author is not responsible for misuse
 - Check local laws before use
 
-## 🔒 Security Features
+##  Security Features
 
 1. **Rate Limiting**: Configurable request rates
 2. **Thread Limits**: Maximum thread count restrictions
@@ -122,7 +121,7 @@ Proxies are stored in `proxies/proxies.json`:
 4. **Proxy Validation**: Active proxy checking
 5. **Timeout Controls**: Connection timeouts
 
-## 🛠️ Technical Details
+##  Technical Details
 
 ### HTTP/2 Advanced Attack (Egnake)
 - Uses Node.js `http2` module for HTTP/2 support
@@ -137,7 +136,7 @@ Proxies are stored in `proxies/proxies.json`:
 - **Memory**: Isolated worker threads
 - **Network**: Proxy support reduces source IP exposure
 
-## 📈 Monitoring
+##  Monitoring
 
 ### Dashboard Features
 - Real-time attack statistics
@@ -150,14 +149,6 @@ Proxies are stored in `proxies/proxies.json`:
 - `stats`: Live platform statistics
 - `attacks`: Active attack updates
 
-## 🔄 Updates
-
-### Version 2.0 Changes
-- Added HTTP/2 Advanced attack (Egnake style)
-- Improved proxy support with CONNECT tunneling
-- Enhanced header randomization
-- Modern web interface
-- Better error handling
 
 ### Future Improvements
 - [ ] SOCKS5 proxy support
@@ -166,7 +157,7 @@ Proxies are stored in `proxies/proxies.json`:
 - [ ] Attack templates
 - [ ] API authentication
 
-## 🆘 Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 1. **"port already in use"**: Change PORT environment variable
@@ -179,14 +170,14 @@ Proxies are stored in `proxies/proxies.json`:
 - Monitor worker thread messages
 - Verify proxy connectivity
 
-## 📚 References
+##  References
 
 - Node.js Documentation
 - HTTP/2 Specification (RFC 7540)
 - TLS 1.3 Specification (RFC 8446)
 - Proxy Protocol Documentation
 
-## 📄 License
+##  License
 
 MIT License - See included LICENSE file for details
 
